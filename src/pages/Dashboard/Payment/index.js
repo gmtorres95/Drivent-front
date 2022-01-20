@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 export default function Payment() {
   const { enrollment } = useApi();
   const [isValidForPayment, setIsValidForPayment] = useState(false);
+  const [ticketModality, setTicketModality] = useState(null);
   useEffect(() => {
     enrollment.getPersonalInformations().then((response) => {
       if(response.status === 200) {
@@ -12,7 +13,6 @@ export default function Payment() {
       }
     });
   }, []);
-
   return (
     <>
       <StyledTypography variant="h4">Ingresso e Pagamento</StyledTypography>
@@ -20,11 +20,11 @@ export default function Payment() {
         <>
           <StyledSubTitle variant="h6">Primeiro, escolha sua modalidade de ingresso</StyledSubTitle>
           <BoxOption>
-            <Option>
+            <Option selected={ ticketModality === "Presencial" ? true : false} onClick={() => ticketModality === "Presencial" ? setTicketModality(null) : setTicketModality("Presencial")}>
               <h1>Presencial</h1>
               <h2>R$ 250</h2>
             </Option>
-            <Option>
+            <Option selected={ ticketModality === "Online" ? true : false} onClick={() => ticketModality === "Online" ? setTicketModality(null) : setTicketModality("Online")}>
               <h1>Online</h1>
               <h2>R$ 100</h2>
             </Option>
@@ -63,6 +63,7 @@ const BoxOption = styled.div`
 
 const Option = styled.div`
   font-family: 'Roboto',sans-serif;
+  background: ${props => props.selected ? "#FFEED2" : "none"};
   width: 145px;
   height: 145px;
   border: 1px solid #CECECE;
