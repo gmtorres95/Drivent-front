@@ -30,11 +30,10 @@ export default function Payment() {
             </Option>
           </BoxOption>
         </> : 
-        <ContainerWarning><StyledWarning variant="h8">Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso</StyledWarning></ContainerWarning>
+        <ContainerWarning><StyledWarning variant="h8" align="center">Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso</StyledWarning></ContainerWarning>
       }
     </> );
 }
-
 const StyledTypography = styled(Typography)`
   margin-bottom: 20px!important;
 `;
@@ -45,17 +44,15 @@ const StyledSubTitle = styled(Typography)`
 const StyledWarning = styled(Typography)`
   font-family: 'Roboto',sans-serif;
   color: #8E8E8E;
-  width: 390px;
-  text-align: center;
   font-size: 20px;
-  line-height: 23px;
-  position: absolute;
-  top:420px;
 `;
 const ContainerWarning = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 390px;
+  text-align: center;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 const BoxOption = styled.div`
   display: flex;
