@@ -62,6 +62,7 @@ const BoxOption = styled.div`
 `;
 
 const Option = styled.div`
+  cursor: pointer;
   font-family: 'Roboto',sans-serif;
   background: ${props => props.selected ? "#FFEED2" : "none"};
   width: 145px;
