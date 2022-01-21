@@ -38,9 +38,11 @@ const StyledTypography = styled(Typography)`
   margin-bottom: 20px!important;
 `;
 
-const StyledSubTitle = styled(Typography)`
+export const StyledSubTitle = styled(Typography)`
+  font-size: 20px !important;
   color: #8E8E8E;
 `;
+
 const StyledWarning = styled(Typography)`
   font-family: 'Roboto',sans-serif;
   color: #8E8E8E;
@@ -54,7 +56,7 @@ const ContainerWarning = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
-const BoxOption = styled.div`
+export const BoxOption = styled.div`
   display: flex;
   width: 314px;
   justify-content: space-between;
