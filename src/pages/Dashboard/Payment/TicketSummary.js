@@ -1,5 +1,6 @@
 import { StyledSubTitle, BoxOption } from "./index";
 import styled from "styled-components";
+import CreditCardPayment from "./CreditCard";
 
 const ticketInfo = [
   {
@@ -27,6 +28,8 @@ export default function TicketInfoSummary() {
           </h2>
         </BoxTicketSummary>  
       </BoxOption> 
+      <StyledSubTitle>Pagamento</StyledSubTitle>
+      <CreditCardPayment />
     </>
   );
 }
@@ -40,7 +43,7 @@ const BoxTicketSummary = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     h1{
       font-size: 16px;
       line-height: 19px;
