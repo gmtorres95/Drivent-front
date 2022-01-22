@@ -6,6 +6,7 @@ export default function Payment() {
   const { enrollment } = useApi();
   const [isValidForPayment, setIsValidForPayment] = useState(false);
   const [ticketModality, setTicketModality] = useState(null);
+  const [hotelType, setHotelType] = useState(null);
   useEffect(() => {
     enrollment.getPersonalInformations().then((response) => {
       if(response.status === 200) {
@@ -13,6 +14,15 @@ export default function Payment() {
       }
     });
   }, []);
+
+  function setTicketData(ticket) {
+    if(ticketModality === ticket) {
+      setTicketModality(null);
+    }
+    else{
+      setTicketModality(ticket);
+    }
+  }
   return (
     <>
       <StyledTypography variant="h4">Ingresso e Pagamento</StyledTypography>
@@ -20,15 +30,28 @@ export default function Payment() {
         <>
           <StyledSubTitle variant="h6">Primeiro, escolha sua modalidade de ingresso</StyledSubTitle>
           <BoxOption>
-            <Option selected={ ticketModality === "Presencial" ? true : false} onClick={() => ticketModality === "Presencial" ? setTicketModality(null) : setTicketModality("Presencial")}>
+            <Option selected={ ticketModality === "Presencial" ? true : false} onClick={() => setTicketData("Presencial")}>
               <h1>Presencial</h1>
               <h2>R$ 250</h2>
             </Option>
-            <Option selected={ ticketModality === "Online" ? true : false} onClick={() => ticketModality === "Online" ? setTicketModality(null) : setTicketModality("Online")}>
+            <Option selected={ ticketModality === "Online" ? true : false} onClick={() => setTicketData("Online")}>
               <h1>Online</h1>
               <h2>R$ 100</h2>
             </Option>
           </BoxOption>
+          {ticketModality  === "Presencial"?
+            <>
+              <StyledSubTitle variant="h6" style={{ marginTop: "44px" }}>Ótimo! Agora escolha sua modalidade de hospedagem</StyledSubTitle> 
+              <BoxOption>
+                <Option selected={ hotelType === "Sem" ? true : false} onClick={() => hotelType === "Sem" ? setHotelType(null) : setHotelType("Sem") } >
+                  <h1>Sem Hotel</h1>
+                  <h2>+ R$ 0</h2>
+                </Option>
+                <Option selected={ hotelType === "Com" ? true : false} onClick={() => hotelType === "Com" ? setHotelType(null) : setHotelType("Com") }>
+                  <h1>Com Hotel</h1>
+                  <h2>+ R$ 350</h2>
+                </Option>
+              </BoxOption></> : <></> }
         </> : 
         <ContainerWarning><StyledWarning variant="h8" align="center">Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso</StyledWarning></ContainerWarning>
       }
@@ -73,6 +96,8 @@ const Option = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  -webkit-transition: all .2s linear 0s;
+  transition: all .2s linear 0s;
     h1{
       font-size: 16px;
       line-height: 19px;
