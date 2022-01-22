@@ -7,6 +7,7 @@ export default function Payment() {
   const [isValidForPayment, setIsValidForPayment] = useState(false);
   const [ticketModality, setTicketModality] = useState(null);
   const [hotelType, setHotelType] = useState(null);
+  const [value, setValue] = useState(0);
   useEffect(() => {
     enrollment.getPersonalInformations().then((response) => {
       if(response.status === 200) {
@@ -14,6 +15,28 @@ export default function Payment() {
       }
     });
   }, []);
+  useEffect(() => {
+    if(ticketModality === "Online") {
+      setHotelType(null);
+    }
+    let ticketValue;
+    let hotelValue;
+    if(ticketModality === "Presencial") {
+      ticketValue = 250;
+    }
+    else if( ticketModality === "Online") {
+      ticketValue = 100;
+      hotelValue = 0;
+    }
+    if(hotelType === "Com") {
+      hotelValue = 350;
+    }
+    else{
+      hotelValue = 0;
+    }
+    let total = ticketValue + hotelValue;
+    setValue(total);
+  }, [ticketModality, hotelType]);
 
   function setTicketData(ticket) {
     if(ticketModality === ticket) {
@@ -23,6 +46,16 @@ export default function Payment() {
       setTicketModality(ticket);
     }
   }
+
+  function setHotelData(type) {
+    if(hotelType === type) {
+      setHotelType(null);
+    }
+    else{
+      setHotelType(type);
+    }
+  }
+
   return (
     <>
       <StyledTypography variant="h4">Ingresso e Pagamento</StyledTypography>
@@ -43,11 +76,11 @@ export default function Payment() {
             <>
               <StyledSubTitle variant="h6" style={{ marginTop: "44px" }}>Ótimo! Agora escolha sua modalidade de hospedagem</StyledSubTitle> 
               <BoxOption>
-                <Option selected={ hotelType === "Sem" ? true : false} onClick={() => hotelType === "Sem" ? setHotelType(null) : setHotelType("Sem") } >
+                <Option selected={ hotelType === "Sem" ? true : false} onClick={() => setHotelData("Sem") } >
                   <h1>Sem Hotel</h1>
                   <h2>+ R$ 0</h2>
                 </Option>
-                <Option selected={ hotelType === "Com" ? true : false} onClick={() => hotelType === "Com" ? setHotelType(null) : setHotelType("Com") }>
+                <Option selected={ hotelType === "Com" ? true : false} onClick={() => setHotelData("Com") }>
                   <h1>Com Hotel</h1>
                   <h2>+ R$ 350</h2>
                 </Option>
