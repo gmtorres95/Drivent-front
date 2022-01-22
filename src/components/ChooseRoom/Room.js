@@ -8,10 +8,10 @@ export default function Room({ roomData, selectedRoom, setSelectedRoom }) {
 
   function decideIcons() {
     let icons = [];
-    for(let i = 0; i < bookings; i++) icons.push(<BedUnavailableIcon/>);
-    if(isSelected) icons.push(<BedSelectedIcon/>);
+    for(let i = 0; i < bookings; i++) icons.push(<BedUnavailableIcon key={icons.length}/>);
+    if(isSelected) icons.push(<BedSelectedIcon key={icons.length}/>);
     const availableBeds = bedsQuantity - icons.length;
-    for(let i = 0; i < availableBeds; i++) icons.push(<BedAvailableIcon/>);
+    for(let i = 0; i < availableBeds; i++) icons.push(<BedAvailableIcon key={icons.length}/>);
     return icons;
   }
 
@@ -19,7 +19,7 @@ export default function Room({ roomData, selectedRoom, setSelectedRoom }) {
     <Wrapper 
       isFull={isFull} 
       isSelected={isSelected}
-      onClick={isFull? "" : () => setSelectedRoom(id)}
+      onClick={() => isFull? "" : setSelectedRoom(id)}
     >
       <RoomNumber>{number}</RoomNumber>
       <IconsWrapper>
