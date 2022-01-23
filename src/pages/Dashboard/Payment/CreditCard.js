@@ -4,8 +4,30 @@ import "react-credit-cards/es/styles-compiled.css";
 import { useState } from "react";
 import Button from "../../../components/Form/Button";
 import { SubmitContainer } from "../../../components/PersonalInformationForm/index";
-import Input from "../../../components/Form/Input";
-  
+import InputMask from "react-input-mask";
+import TextField from "@material-ui/core/TextField";
+
+function CreditCardInfoInput({ mask, onChange, name, onFocus, placeholder }) {
+  return (
+    <InputMask
+      mask={mask}
+      onChange={onChange}
+      name={name}
+      placeholder={placeholder}
+      onFocus={onFocus}
+    >
+      {() => <TextField
+        variant="outlined"
+        mask={mask}
+        onChange={onChange}
+        placeholder={placeholder}
+        name={name}
+        onFocus={onFocus}
+      />}
+    </InputMask>
+  );
+}
+
 export default function CreditCardPayment() {
   const [cardNumber, setCardNumber] = useState("");
   const [name, setName] = useState("");
@@ -16,7 +38,7 @@ export default function CreditCardPayment() {
   function makePayment(event) {
     event.preventDefault();
     const body = {
-      cardNumber,
+      cardNumber: cardNumber.replace(/\s/g, ""),
       name,
       validThru,
       cvc,
@@ -34,20 +56,21 @@ export default function CreditCardPayment() {
           focused={isFocus}
         />
         <ContainerInputs>
-          <Input
+          <CreditCardInfoInput
+            marginButtom={20}
             name="cardNumber"
-            //mask="9999 9999 9999 9999"
-            label="Card Number"
-            type="text"
+            mask="9999 9999 9999 9999"
+            placeholder="Card Number"
+            type="number"
             fullWidth
             value={cardNumber}
             onFocus={(e) => setIsFocus(e.target.name)}
             onChange={e => setCardNumber(e.target.value)}
           />
-          <p> Eg: 12...,34...,34...,56...</p>
-          <Input
+          <p> Eg: 49...,51...,36...,37...</p>
+          <CreditCardInfoInput
             name="name"
-            label="Name"
+            placeholder="Name"
             type="text"
             fullWidth
             value={name}
@@ -55,19 +78,20 @@ export default function CreditCardPayment() {
             onChange={e => setName(e.target.value)}
           />
           <BoxInputs>
-            <Input
+            <CreditCardInfoInput
               name="validThru"
-              label="Valid Thru"
-              type="text"
+              placeholder="Valid Thru"
+              type="date"
+              mask={"99/99"}
               fullWidth
               value={validThru}
               onFocus={(e) => setIsFocus(e.target.name)}
               onChange={e => setValidThru(e.target.value)}
             />
-            <Input
+            <CreditCardInfoInput
               name="cvc"
-              //mask="999"
-              label="CVC"
+              mask="999"
+              placeholder="CVC"
               type="number"
               fullWidth
               value={cvc}
@@ -88,7 +112,7 @@ export default function CreditCardPayment() {
 
 const Form = styled.form`
     p {
-       margin-top: 5px;
+       margin-bottom: 15px;
        color: #898989;
     }
     height: auto;
@@ -99,7 +123,6 @@ const Box = styled.div`
     margin-left: 0;
     margin-top:10px;
     div:first-child {
-        align-self: flex-start;
         margin: 0;
         margin-top: 2px;
     }
@@ -107,6 +130,10 @@ const Box = styled.div`
 
 const BoxInputs = styled.div`
     display: flex;
+    align-items: center;
+    div:first-child {
+      margin-right: 20px;
+    }
 `;
 
 const ContainerInputs = styled.div`
@@ -114,7 +141,11 @@ const ContainerInputs = styled.div`
     flex-direction: column;
     width: 300px;
     margin-left: 30px;
+    input:nth-child(2) {
+      margin: 10px 0px;
+    }
     input {
         height: 10px;
+
     }
 `;

@@ -1,29 +1,41 @@
 import { StyledSubTitle, BoxOption } from "./index";
 import styled from "styled-components";
 import CreditCardPayment from "./CreditCard";
-
-const ticketInfo = [
-  {
-    id: 1,
-    type: "Presencial Com Hotel",
-    price: 250,
-    hotelPrice: 100,
-  }
-];
+import useApi from "../../../hooks/useApi";
+import { useEffect, useState } from "react";
+import Loading from "../../../components/Loading";
+import { toast } from "react-toastify";
 
 export default function TicketInfoSummary() {
+  const api = useApi();
+  const [ticketInfo, setTicketInfo] = useState([]);
+
+  useEffect(() => {
+    api.ticket.getTicketByUser().then((response) => {
+      setTicketInfo(response.data);
+    }).catch(() => {
+      toast("Não foi possível carregar os detalhes do ingresso");
+    });
+  }, []);
+
+  if(!ticketInfo.type) {
+    return (
+      <Loading />
+    );
+  }
+
   return (
     <>
       <StyledSubTitle>Ingresso Escolhido</StyledSubTitle>
       <BoxOption>
         <BoxTicketSummary>
           <h1>{`
-                ${ticketInfo[0].type.split(" ")[0]} + 
-                ${ticketInfo[0].type.split(" ").splice(1).join(" ")}
+                ${ticketInfo.type.type.split(" ")[0]} + 
+                ${ticketInfo.type.type.split(" ").splice(1).join(" ")}
             `}
           </h1>
           <h2>{`
-                R$ ${ticketInfo[0].price + ticketInfo[0].hotelPrice}
+                R$ ${Number(ticketInfo.type.price) + Number(ticketInfo.type.hotelPrice)}
             `}
           </h2>
         </BoxTicketSummary>  
@@ -55,3 +67,4 @@ const BoxTicketSummary = styled.div`
       margin-top: 5px;
     }
 `;
+
