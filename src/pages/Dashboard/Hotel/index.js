@@ -1,3 +1,10 @@
+import ChooseRoom from "../../../components/ChooseRoom";
+
 export default function Hotel() {
-  return "Hotel: Em breve!";
+  return(
+    <>
+      <ChooseRoom selectedHotel={1}/>
+    </>
+  );
 }
+
