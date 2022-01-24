@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { BsPerson, BsPersonFill } from "react-icons/bs";
 
-export default function Room({ roomData, selectedRoom, setSelectedRoom }) {
-  const { id, number, bookings, bedsQuantity } = roomData;
+export default function Room({ roomData, selectedRoom, setSelectedRoom, isWhatsChanging }) {
+  const { id, number, bedsQuantity } = roomData;
+  let { bookings } = roomData;
+  if(isWhatsChanging) bookings--;
   const isSelected = selectedRoom === id;
   const isFull = bedsQuantity === bookings;
 

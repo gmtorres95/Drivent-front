@@ -17,9 +17,17 @@ export default class TicketApi extends AuthenticatedApi {
       }
     });
   }
-
-  updateTicket() {
+  
+  updateTicketPayment() {
     return api.put("/ticket/payment", {}, {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
+  }
+
+  updateTicketBooking(roomId) {
+    return api.post(`/ticket/booking/${roomId}`, {}, {
       headers: {
         ...this.getAuthorizationHeader()
       }

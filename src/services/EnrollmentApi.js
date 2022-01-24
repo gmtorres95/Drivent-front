@@ -17,4 +17,12 @@ export default class EnrollmentApi extends AuthenticatedApi {
       }
     });
   }
+
+  getTicket(body) {
+    return api.get("/ticket", body, {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
+  }
 }
