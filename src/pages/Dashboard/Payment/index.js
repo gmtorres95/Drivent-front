@@ -6,6 +6,7 @@ export default function Payment() {
   const { enrollment } = useApi();
   const [isValidForPayment, setIsValidForPayment] = useState(false);
   const [ticketModality, setTicketModality] = useState(null);
+
   useEffect(() => {
     enrollment.getPersonalInformations().then((response) => {
       if(response.status === 200) {
