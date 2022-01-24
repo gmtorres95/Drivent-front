@@ -12,6 +12,7 @@ export default function Payment() {
   const [hotelType, setHotelType] = useState(null);
   const [value, setValue] = useState(0);
   const [isValidForSummary, setIsValidForSummary] = useState(false);
+
   useEffect(() => {
     enrollment.getPersonalInformations().then((response) => {
       if(response.status === 200) {
