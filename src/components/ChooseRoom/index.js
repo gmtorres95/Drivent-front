@@ -59,4 +59,5 @@ const Wrapper = styled.div`
 
 const Subtitle = styled(Typography)`
   color: #8E8E8E;
+  font-style: normal;
 `;

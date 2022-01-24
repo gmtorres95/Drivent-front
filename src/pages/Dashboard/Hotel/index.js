@@ -1,10 +1,5 @@
-import ChooseRoom from "../../../components/ChooseRoom";
+import HotalSelection from "../../../components/HotelSelection";
 
 export default function Hotel() {
-  return(
-    <>
-      <ChooseRoom selectedHotel={1}/>
-    </>
-  );
+  return <HotalSelection />;
 }
-
