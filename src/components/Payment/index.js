@@ -1,18 +1,21 @@
-import { StyledSubTitle, BoxOption } from "../../pages/Dashboard/Payment/index";
 import styled from "styled-components";
 import CreditCardPayment from "./CreditCard";
 import useApi from "../../hooks/useApi";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Loading from "../Loading";
 import { toast } from "react-toastify";
+import { BoxOption } from "../Ticket/BoxOption";
+import { Typography } from "@material-ui/core";
+import TicketContext from "../../contexts/TicketContext";
 
 export default function TicketInfoSummary() {
-  const api = useApi();
+  const { ticket } = useApi();
   const [ticketInfo, setTicketInfo] = useState([]);
-  const [isPaid, setIsPaid] = useState(false);
+  const { ticketData } = useContext(TicketContext);
+  const [isPaid, setIsPaid] = useState(ticketData.isPaid);
 
   useEffect(() => {
-    api.ticket.getTicketByUser().then((response) => {
+    ticket.getTicketByUser().then((response) => {
       setTicketInfo(response.data);
     }).catch(() => {
       toast("Não foi possível carregar os detalhes do ingresso");
@@ -69,3 +72,6 @@ const BoxTicketSummary = styled.div`
     }
 `;
 
+const StyledSubTitle = styled(Typography)`
+  color: #8E8E8E;
+`;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Button from "../Form/Button";
 import { SubmitContainer } from "../PersonalInformationForm";
 import useApi from "../../hooks/useApi";
@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { HiCheckCircle } from "react-icons/hi";
 import CreditCardInfoInput from "./CreditCardInfoInput";
 import validation from "./validation";
+import TicketContext from "../../contexts/TicketContext";
 
 export default function CreditCardPayment({ isPaid, setIsPaid }) {
   const [cardNumber, setCardNumber] = useState("");
@@ -16,7 +17,8 @@ export default function CreditCardPayment({ isPaid, setIsPaid }) {
   const [validThru, setValidThru] = useState("");
   const [cvc, setCvc] = useState("");
   const [isFocus, setIsFocus] = useState("");
-  const api = useApi();
+  const { attTicket } = useContext(TicketContext);
+  const { ticket } = useApi();
 
   function makePayment(event) {
     event.preventDefault();
@@ -31,8 +33,9 @@ export default function CreditCardPayment({ isPaid, setIsPaid }) {
       return toast("Preencha os dados corretamente!");
     }
 
-    api.ticket.updateTicket().then((response) => {
+    ticket.updateTicketPayment().then((response) => {
       setIsPaid(true);
+      attTicket();
       toast("Pagamento efetuado com sucesso!");
     }).catch(() => {
       toast("Não foi possível carregar os detalhes do ingresso");
