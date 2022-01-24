@@ -1,33 +1,27 @@
 import styled from "styled-components";
 import { Typography } from "@material-ui/core";
 
-export default function HotelCard({ hotelData, selectedHotel, setSelectedHotel }) {
-  const { id, image, name, roomTypes, totalOfBeds, unavailableBeds } = hotelData;
-  const isSelected = selectedHotel === id;
-
-  function roomTypesText() {
-    if(roomTypes.length === 3) return "Single, Double e Triple";
-    if(roomTypes.length === 1) return roomTypes[0];
-    return `${roomTypes[0]} e ${roomTypes[1]}`;
-  }
+export default function SumaryCard({ room }) {
+  const { number, roomType, bookings, hotel } = room;
 
   return(
-    <Wrapper isSelected={isSelected} onClick={() => setSelectedHotel(id)}>
-      <HotelImage src={image} />
-      <HotelName variant="h6" >{name}</HotelName>
+    <Wrapper isSelected={true} >
+      <HotelImage src={hotel.image} />
+      <HotelName variant="h6" >{hotel.name}</HotelName>
       <TextWrapper>
-        <MiniTitle>Tipos de acomodação:</MiniTitle>
-        <p>{roomTypesText()}</p>
+        <MiniTitle>Quarto reservado</MiniTitle>
+        <p>{number} ({roomType})</p>
       </TextWrapper>
       <TextWrapper>
-        <MiniTitle>Vagas disponíveis:</MiniTitle>
-        <p>{totalOfBeds - unavailableBeds}</p>
+        <MiniTitle>Pessoas no seu quarto</MiniTitle>
+        <p>Você {bookings > 1 && `e mais ${bookings-1}`}</p>
       </TextWrapper>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
+  margin: 15px 0 50px;
   width: 196px;
   height: 264px;
   background: ${({ isSelected }) => isSelected ? "#FFEED2" : "#F1F1F1"};
@@ -47,6 +41,7 @@ const HotelImage = styled.img`
 
 const HotelName = styled(Typography)`
   color: #343434;
+  font-weight: normal !important;
 `;
 
 const TextWrapper = styled.div`

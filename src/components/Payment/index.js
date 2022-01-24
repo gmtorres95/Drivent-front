@@ -33,10 +33,10 @@ export default function TicketInfoSummary() {
       <StyledSubTitle variant="h6">Ingresso Escolhido</StyledSubTitle>
       <BoxOption>
         <BoxTicketSummary>
-          <h1>{`
-                ${ticketInfo.type.type.split(" ")[0]} + 
-                ${ticketInfo.type.type.split(" ").splice(1).join(" ")}
-            `}
+          <h1>
+            {ticketInfo.type.type.split(" ")[0]}
+            {ticketInfo.type.type.split(" ")[1] && " + "} 
+            {ticketInfo.type.type.split(" ").splice(1).join(" ")}
           </h1>
           <h2>{`
                 R$ ${Number(ticketInfo.type.price) + Number(ticketInfo.type.hotelPrice)}

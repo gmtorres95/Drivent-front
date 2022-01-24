@@ -1,13 +1,15 @@
 import { Typography } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import useApi from "../../hooks/useApi";
 import ChooseRoom from "../ChooseRoom";
 import HotelCard from "./HotelCard";
+import TicketContext from "../../contexts/TicketContext";
 
-export default function HotalSelection() {
-  const [selectedHotel, setSelectedHotel] = useState(1);
+export default function HotalSelection({ setIsChangingRoom }) {
+  const { ticketData } = useContext(TicketContext);
+  const [selectedHotel, setSelectedHotel] = useState(ticketData.room?.hotel.id || null);
   const [hotels, setHotels] = useState([]);
   const { hotel } = useApi();
 
@@ -42,7 +44,12 @@ export default function HotalSelection() {
           setSelectedHotel={setSelectedHotel}
         />)}
       </HotelSeletion>
-      <ChooseRoom selectedHotel={selectedHotel}/>
+      {selectedHotel &&
+        <ChooseRoom 
+          selectedHotel={selectedHotel}
+          setIsChangingRoom={setIsChangingRoom}
+        />
+      }
     </>
   );
 }
@@ -56,5 +63,5 @@ const HotelSeletion = styled.div`
 
 const Subtitle = styled(Typography)`
   color: #8E8E8E;
-  font-style: normal;
+  font-weight: normal !important;
 `;

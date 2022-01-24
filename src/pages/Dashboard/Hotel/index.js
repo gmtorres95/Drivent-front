@@ -1,18 +1,23 @@
 import { Typography } from "@material-ui/core";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import HotalSelection from "../../../components/HotelSelection";
+import HotelSumary from "../../../components/HotelSumary";
 import TicketContext from "../../../contexts/TicketContext";
 
 export default function Hotel() {
   const { ticketData } = useContext(TicketContext);
+  const [isChangingRoom, setIsChangingRoom] = useState(false);
 
   return(
     <>
       <StyledTypography variant="h4">Escolha de hotel e quarto</StyledTypography>
       {ticketData?.isPaid ?
         Number(ticketData.type.hotelPrice) !== 0 ?
-          <HotalSelection />
+          ticketData.room && !isChangingRoom ?
+            <HotelSumary data={ticketData.room} setIsChangingRoom={setIsChangingRoom} />
+            :
+            <HotalSelection setIsChangingRoom={setIsChangingRoom} />
           :
           <ContainerWarning>
             <StyledWarning 

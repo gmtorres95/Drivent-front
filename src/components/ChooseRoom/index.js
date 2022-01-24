@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
@@ -6,14 +6,15 @@ import Room from "./Room";
 import Button from "../Form/Button";
 import useApi from "../../hooks/useApi";
 import { Typography } from "@material-ui/core";
+import TicketContext from "../../contexts/TicketContext";
 
-export default function ChooseRoom({ selectedHotel }) {
+export default function ChooseRoom({ selectedHotel, setIsChangingRoom }) {
+  const { ticketData, attTicket } = useContext(TicketContext);
   const [rooms, setRooms] = useState([]);
-  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [selectedRoom, setSelectedRoom] = useState(ticketData.room?.id || null);
   const { hotel, ticket } = useApi();
 
   useEffect(() => {
-    setSelectedRoom(null);
     getRooms();
   }, [selectedHotel]);
 
@@ -37,6 +38,8 @@ export default function ChooseRoom({ selectedHotel }) {
     ticket.updateTicketBooking(selectedRoom)
       .then((res) => {
         toast("Quarto reservado com sucesso!");
+        attTicket();
+        setIsChangingRoom(false);
       })
       .catch((error) => {
         if (error.response?.data?.details) {
@@ -60,6 +63,7 @@ export default function ChooseRoom({ selectedHotel }) {
           roomData={e}
           selectedRoom={selectedRoom}
           setSelectedRoom={setSelectedRoom}
+          isWhatsChanging={ticketData.room?.id === e.id}
         />)}
       </Wrapper>
       {selectedRoom &&
@@ -78,5 +82,5 @@ const Wrapper = styled.div`
 
 const Subtitle = styled(Typography)`
   color: #8E8E8E;
-  font-style: normal;
+  font-weight: normal !important;
 `;
