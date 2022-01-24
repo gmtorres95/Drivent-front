@@ -1,16 +1,23 @@
 import styled from "styled-components";
 import { Typography } from "@material-ui/core";
 
-export default function HotelCard({ hotelData }) {
-  const { image, name, roomTypes, totalOfBeds, unavailableBeds } = hotelData;
+export default function HotelCard({ hotelData, selectedHotel, setSelectedHotel }) {
+  const { id, image, name, roomTypes, totalOfBeds, unavailableBeds } = hotelData;
+  const isSelected = selectedHotel === id;
+
+  function roomTypesText() {
+    if(roomTypes.length === 3) return "Single, Double e Triple";
+    if(roomTypes.length === 1) return roomTypes[0];
+    return `${roomTypes[0]} e ${roomTypes[1]}`;
+  }
 
   return(
-    <Wrapper>
+    <Wrapper isSelected={isSelected} onClick={() => setSelectedHotel(id)}>
       <HotelImage src={image} />
       <HotelName variant="h6" >{name}</HotelName>
       <TextWrapper>
         <MiniTitle>Tipos de acomodação:</MiniTitle>
-        <p>{roomTypes}</p>
+        <p>{roomTypesText()}</p>
       </TextWrapper>
       <TextWrapper>
         <MiniTitle>Vagas disponíveis:</MiniTitle>
@@ -27,8 +34,9 @@ const Wrapper = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding: 15px 15px;
   gap: 10px; 
+  cursor: pointer;
 `;
 
 const HotelImage = styled.img`
