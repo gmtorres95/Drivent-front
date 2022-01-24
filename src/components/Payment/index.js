@@ -1,14 +1,15 @@
-import { StyledSubTitle, BoxOption } from "./index";
+import { StyledSubTitle, BoxOption } from "../../pages/Dashboard/Payment/index";
 import styled from "styled-components";
 import CreditCardPayment from "./CreditCard";
-import useApi from "../../../hooks/useApi";
+import useApi from "../../hooks/useApi";
 import { useEffect, useState } from "react";
-import Loading from "../../../components/Loading";
+import Loading from "../Loading";
 import { toast } from "react-toastify";
 
 export default function TicketInfoSummary() {
   const api = useApi();
   const [ticketInfo, setTicketInfo] = useState([]);
+  const [isPaid, setIsPaid] = useState(false);
 
   useEffect(() => {
     api.ticket.getTicketByUser().then((response) => {
@@ -26,7 +27,7 @@ export default function TicketInfoSummary() {
 
   return (
     <>
-      <StyledSubTitle>Ingresso Escolhido</StyledSubTitle>
+      <StyledSubTitle variant="h6">Ingresso Escolhido</StyledSubTitle>
       <BoxOption>
         <BoxTicketSummary>
           <h1>{`
@@ -40,8 +41,8 @@ export default function TicketInfoSummary() {
           </h2>
         </BoxTicketSummary>  
       </BoxOption> 
-      <StyledSubTitle>Pagamento</StyledSubTitle>
-      <CreditCardPayment />
+      <StyledSubTitle variant="h6">Pagamento</StyledSubTitle>
+      <CreditCardPayment isPaid={isPaid} setIsPaid={setIsPaid} />
     </>
   );
 }

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useApi from "../../../hooks/useApi";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
+import TicketInfoSummary from "../../../components/Payment";
 
 export default function Payment() {
   const { enrollment } = useApi();
@@ -55,6 +56,7 @@ const ContainerWarning = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
+
 export const BoxOption = styled.div`
   display: flex;
   width: 314px;

@@ -68,27 +68,6 @@ const validations = {
       message: "Digite um número válido",
     },
   },
-
-  // cardNumber: {
-  //   custom: {
-  //     isValid: (value) => parseInt(value?.length, 10) === 16,
-  //     message: "Digite um número válido",
-  //   },
-  // },
-
-  // validThru: {
-  //   custom: {
-  //     isValid: (value) => Number(value),
-  //     message: "Digite um número válido",
-  //   },
-  // },
-  
-  // cvc: {
-  //   custom: {
-  //     isValid: (value) => parseInt(value?.length, 10) === 3,
-  //     message: "Digite um número válido",
-  //   },
-  // },
 };
 
 export default validations;
