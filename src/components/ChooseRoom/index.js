@@ -10,15 +10,34 @@ import { Typography } from "@material-ui/core";
 export default function ChooseRoom({ selectedHotel }) {
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
-  const { hotel } = useApi();
+  const { hotel, ticket } = useApi();
 
   useEffect(() => {
+    setSelectedRoom(null);
     getRooms();
   }, [selectedHotel]);
 
   function getRooms() {
     hotel.getRoomsByHotelId(selectedHotel)
       .then((res) => setRooms(res.data))
+      .catch((error) => {
+        if (error.response?.data?.details) {
+          for (const detail of error.response.data.details) {
+            toast(detail);
+          }
+        } else {
+          toast("Não foi possível");
+        }
+        /* eslint-disable-next-line no-console */
+        console.log(error);
+      });
+  }
+
+  function handleSubmit() {
+    ticket.updateTicketBooking(selectedRoom)
+      .then((res) => {
+        toast("Quarto reservado com sucesso!");
+      })
       .catch((error) => {
         if (error.response?.data?.details) {
           for (const detail of error.response.data.details) {
@@ -44,7 +63,7 @@ export default function ChooseRoom({ selectedHotel }) {
         />)}
       </Wrapper>
       {selectedRoom &&
-        <Button>RESERVAR QUARTO</Button>
+        <Button onClick={handleSubmit} >RESERVAR QUARTO</Button>
       }
     </>
   );
