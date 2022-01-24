@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useApi from "../../../hooks/useApi";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
+import TicketInfoSummary from "../../../components/Payment";
 import Button from "../../../components/Form/Button";
 import { toast } from "react-toastify";
 
@@ -119,7 +120,7 @@ const StyledTypography = styled(Typography)`
   margin-bottom: 20px!important;
 `;
 
-const StyledSubTitle = styled(Typography)`
+export const StyledSubTitle = styled(Typography)`
   color: #8E8E8E;
 `;
 const StyledWarning = styled(Typography)`
@@ -135,7 +136,8 @@ const ContainerWarning = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
-const BoxOption = styled.div`
+
+export const BoxOption = styled.div`
   display: flex;
   width: 314px;
   justify-content: space-between;
@@ -166,4 +168,3 @@ const Option = styled.div`
       margin-top: 5px;
     }
 `;
-
