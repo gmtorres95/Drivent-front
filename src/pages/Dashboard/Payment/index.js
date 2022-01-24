@@ -3,8 +3,10 @@ import useApi from "../../../hooks/useApi";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 import Button from "../../../components/Form/Button";
+import { toast } from "react-toastify";
+
 export default function Payment() {
-  const { enrollment } = useApi();
+  const { enrollment, ticket } = useApi();
   const [isValidForPayment, setIsValidForPayment] = useState(false);
   const [ticketModality, setTicketModality] = useState(null);
   const [hotelType, setHotelType] = useState(null);
@@ -55,6 +57,12 @@ export default function Payment() {
     }
   }
 
+  function returnHotelType() {
+    if(ticketModality === "Presencial" && hotelType === "Com") return 1;
+    else if(ticketModality === "Presencial" && hotelType === "Sem") return 2;
+    else return 3;
+  }
+
   function setHotelData(type) {
     if(hotelType === type) {
       setHotelType(null);
@@ -62,6 +70,14 @@ export default function Payment() {
     else{
       setHotelType(type);
     }
+  }
+  function postReservation() {
+    const type = returnHotelType();
+    ticket.postTicket({ type }).then(() => {
+      toast("Reserva feita com sucesso!");
+    }).catch(() => {
+      toast.error("Falha ao fazer reserva");
+    });
   }
 
   return (
@@ -92,7 +108,7 @@ export default function Payment() {
                   <h1>Com Hotel</h1>
                   <h2>+ R$ 350</h2>
                 </Option>
-              </BoxOption></> : <></>}{isValidForSummary ? <><StyledSubTitle variant="h6"  style={{ marginTop: "43px" }}>Fechado! O total ficou em <strong>R$ {value}</strong>. Agora é só confirmar:</StyledSubTitle><Button style={{ height: "37px", width: "193px", fontSize: "14px", textAlign: "center", color: "#000000" }}>Reservar Ingresso</Button></> : <></>}
+              </BoxOption></> : <></>}{isValidForSummary ? <><StyledSubTitle variant="h6"  style={{ marginTop: "43px" }}>Fechado! O total ficou em <strong>R$ {value}</strong>. Agora é só confirmar:</StyledSubTitle><Button style={{ height: "37px", width: "193px", fontSize: "14px", textAlign: "center", color: "#000000" }} onClick={postReservation}>Reservar Ingresso</Button></> : <></>}
         </> : 
         <ContainerWarning><StyledWarning variant="h8" align="center">Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso</StyledWarning></ContainerWarning>
       }
