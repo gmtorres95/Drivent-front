@@ -37,6 +37,12 @@ const locations = [
         start: new Date("10/22/2022 10:00"),
         end: new Date("10/22/2022 11:00"),
         totalOfSeats: 27,
+      },
+      {
+        name: "Fortnite: montando o PC ideal",
+        start: new Date("10/22/2022 11:00"),
+        end: new Date("10/22/2022 12:00"),
+        totalOfSeats: 27,
       }
     ]
   },
@@ -44,9 +50,15 @@ const locations = [
     name: "Auditório Lateral",
     activities: [
       {
-        name: "Palestra x",
+        name: "Palestra 1",
         start: new Date("10/22/2022 09:00"),
         end: new Date("10/22/2022 11:00"),
+        totalOfSeats: 27, 
+      },
+      {
+        name: "Palestra 2",
+        start: new Date("10/22/2022 12:00"),
+        end: new Date("10/22/2022 13:00"),
         totalOfSeats: 27,
       }
     ]
@@ -55,15 +67,15 @@ const locations = [
     name: "Sala de Workshop",
     activities: [
       {
-        name: "Palestra y",
+        name: "Palestra 3",
         start: new Date("10/22/2022 09:00"),
         end: new Date("10/22/2022 10:00"),
         totalOfSeats: 27,
       },
       {
-        name: "Palestra z",
+        name: "Palestra 4",
         start: new Date("10/22/2022 10:00"),
-        end: new Date("10/22/2022 11:00"),
+        end: new Date("10/22/2022 11:30"),
         totalOfSeats: 27,
       }
     ]

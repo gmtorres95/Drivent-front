@@ -10,7 +10,7 @@ export default function ActivitiesSelection() {
 }
 
 const Container = styled.div`
-  height: 100%;
+  height: 440px;
   display: flex;
   align-items: center;
   justify-content: flex-start;

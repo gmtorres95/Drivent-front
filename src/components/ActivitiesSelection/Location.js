@@ -8,9 +8,9 @@ export default function Location(props) {
   return (
     <PlacesContainer>
       <Tittle>{locationInfo.name}</Tittle>
-      <EventsContainer>
+      <ActivitiesContainer>
         {activities.map((activity) => <ActivityCard activityInfo={activity} />)}
-      </EventsContainer>
+      </ActivitiesContainer>
     </PlacesContainer>
   );
 }
@@ -24,16 +24,28 @@ const PlacesContainer = styled.div`
 `;
 
 const Tittle = styled.p`
+  height: 48px;
   font-size: 17px;
   color: #7b7b7b;
-  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
 `;
 
-const EventsContainer = styled.div`
+const ActivitiesContainer = styled.div`
   border: 1px solid #d7d7d7;
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+  }
+  /* display: flex;
+  flex-direction: column; */
 `;
