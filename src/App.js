@@ -16,6 +16,7 @@ import Dashboard from "./pages/Dashboard";
 import EventInfoContext, { EventInfoProvider } from "./contexts/EventInfoContext";
 import UserContext, { UserProvider } from "./contexts/UserContext";
 import { TicketProvider } from "./contexts/TicketContext";
+import { ActivityProvider } from "./contexts/ActivityContext";
 
 export default function App() {
   return (
@@ -24,25 +25,27 @@ export default function App() {
       <EventInfoProvider>
         <UserProvider>
           <TicketProvider>
-            <Router>
-              <Switch>
-                <ConditionalRoute check={ensureCountdownOngoing} path="/" exact>
-                  <Countdown />
-                </ConditionalRoute>
+            <ActivityProvider>
+              <Router>
+                <Switch>
+                  <ConditionalRoute check={ensureCountdownOngoing} path="/" exact>
+                    <Countdown />
+                  </ConditionalRoute>
 
-                <ConditionalRoute check={ensureCountdownOver} path="/enroll" exact>
-                  <Enroll />
-                </ConditionalRoute>
+                  <ConditionalRoute check={ensureCountdownOver} path="/enroll" exact>
+                    <Enroll />
+                  </ConditionalRoute>
 
-                <ConditionalRoute check={ensureCountdownOver} path="/sign-in" exact>
-                  <SignIn />
-                </ConditionalRoute>
+                  <ConditionalRoute check={ensureCountdownOver} path="/sign-in" exact>
+                    <SignIn />
+                  </ConditionalRoute>
 
-                <ConditionalRoute check={ensureAuthenticated} path="/dashboard">
-                  <Dashboard />
-                </ConditionalRoute>
-              </Switch>
-            </Router>
+                  <ConditionalRoute check={ensureAuthenticated} path="/dashboard">
+                    <Dashboard />
+                  </ConditionalRoute>
+                </Switch>
+              </Router>
+            </ActivityProvider>
           </TicketProvider>
         </UserProvider>
       </EventInfoProvider>

@@ -1,18 +1,14 @@
 import styled from "styled-components";
 import ActivityCard from "./ActivityCard";
 
-export default function Location(props) {
-  const {
-    locationInfo,
-    selectedActivities,
-  } = props;
+export default function Location({ locationInfo }) {
   const { activities } = locationInfo;
 
   return (
     <PlacesContainer>
       <Tittle>{locationInfo.name}</Tittle>
       <ActivitiesContainer>
-        {activities.map((activity) => <ActivityCard activityInfo={activity} selectedActivities={selectedActivities} />)}
+        {activities.map((activity) => <ActivityCard activityInfo={activity} />)}
       </ActivitiesContainer>
     </PlacesContainer>
   );

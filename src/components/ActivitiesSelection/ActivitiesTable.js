@@ -1,16 +1,19 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import ActivityContext from "../../contexts/ActivityContext";
 import Place from "./Location";
 
 export default function ActivitiesTable() {
+  const { activities } = useContext(ActivityContext);
+
   return (
     <EventsContainer>
       {
-        locations.map((locationInfo, key) => {
+        activities.map((locationInfo, key) => {
           return (
             <Place
               key={key}
               locationInfo={locationInfo}
-              selectedActivities={selectedActivities}
             />
           );
         })
@@ -25,79 +28,3 @@ const EventsContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-
-const selectedActivities = [1, 8, 4];
-
-const locations = [
-  {
-    name: "Auditório Principal",
-    activities: [
-      {
-        id: 1,
-        name: "Minecraft: montando o PC ideal",
-        start: new Date("10/22/2022 09:00"),
-        end: new Date("10/22/2022 10:00"),
-        totalOfSeats: 18,
-      },
-      {
-        id: 2,
-        name: "LoL: montando o PC ideal",
-        start: new Date("10/22/2022 10:00"),
-        end: new Date("10/22/2022 11:00"),
-        totalOfSeats: 27,
-      },
-      {
-        id: 3,
-        name: "Fortnite: montando o PC ideal",
-        start: new Date("10/22/2022 11:00"),
-        end: new Date("10/22/2022 12:00"),
-        totalOfSeats: 30,
-      },
-      {
-        id: 4,
-        name: "DotA: montando o PC ideal",
-        start: new Date("10/22/2022 11:00"),
-        end: new Date("10/22/2022 12:00"),
-        totalOfSeats: 50,
-      }
-    ]
-  },
-  {
-    name: "Auditório Lateral",
-    activities: [
-      {
-        id: 5,
-        name: "Palestra 1",
-        start: new Date("10/22/2022 09:00"),
-        end: new Date("10/22/2022 11:00"),
-        totalOfSeats: 35, 
-      },
-      {
-        id: 6,
-        name: "Palestra 2",
-        start: new Date("10/22/2022 12:00"),
-        end: new Date("10/22/2022 13:00"),
-        totalOfSeats: 0,
-      }
-    ]
-  },
-  {
-    name: "Sala de Workshop",
-    activities: [
-      {
-        id: 7,
-        name: "Palestra 3",
-        start: new Date("10/22/2022 09:00"),
-        end: new Date("10/22/2022 10:00"),
-        totalOfSeats: 0,
-      },
-      {
-        id: 8,
-        name: "Palestra 4",
-        start: new Date("10/22/2022 10:00"),
-        end: new Date("10/22/2022 11:30"),
-        totalOfSeats: 27,
-      }
-    ]
-  }
-];

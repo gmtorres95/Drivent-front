@@ -1,7 +1,9 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import ActivityContext from "../../contexts/ActivityContext";
 import ActivityButton from "./ActivityButton";
 
-export default function ActivityCard({ activityInfo, selectedActivities }) {
+export default function ActivityCard({ activityInfo }) {
   const {
     id,
     name,
@@ -9,6 +11,7 @@ export default function ActivityCard({ activityInfo, selectedActivities }) {
     end,
     totalOfSeats,
   } = activityInfo;
+  const { selectedActivities } = useContext(ActivityContext);
 
   function getCardHeight(start, end) {
     const duration = (end - start) / 60000;
@@ -25,7 +28,7 @@ export default function ActivityCard({ activityInfo, selectedActivities }) {
   const isSelected = selectedActivities.includes(id);
 
   return (
-    <StyledCard height={cardHeight} isSelected={isSelected} >
+    <StyledCard height={cardHeight} isSelected={isSelected} ifFull={!totalOfSeats} >
       <Info>
         <Name>{name}</Name>
         <Time>{formatTime(start)} - {formatTime(end)}</Time>
