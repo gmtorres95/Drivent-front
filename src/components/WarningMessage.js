@@ -18,7 +18,7 @@ const StyledWarning = styled(Typography)`
   font-family: 'Roboto',sans-serif;
   color: #8E8E8E;
   font-size: 20px;
-  width: 421px;
+  width: 480px;
 `;
 
 const ContainerWarning = styled.div`
