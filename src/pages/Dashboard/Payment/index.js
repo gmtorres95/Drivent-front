@@ -6,6 +6,7 @@ import TicketInfoSummary from "../../../components/Payment";
 import Ticket from "../../../components/Ticket";
 import { useContext } from "react";
 import TicketContext from "../../../contexts/TicketContext";
+import WarningMessage from "../../../components/WarningMessage";
 
 export default function Payment() {
   const { enrollment } = useApi();
@@ -29,14 +30,9 @@ export default function Payment() {
           :
           <TicketInfoSummary />
         : 
-        <ContainerWarning>
-          <StyledWarning 
-            variant="h6" 
-            align="center"
-          >
+        <WarningMessage>
             Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso
-          </StyledWarning>
-        </ContainerWarning>
+        </WarningMessage>
       }
     </> );
 }
