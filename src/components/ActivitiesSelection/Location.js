@@ -2,14 +2,17 @@ import styled from "styled-components";
 import ActivityCard from "./ActivityCard";
 
 export default function Location(props) {
-  const { locationInfo } = props;
+  const {
+    locationInfo,
+    selectedActivities,
+  } = props;
   const { activities } = locationInfo;
 
   return (
     <PlacesContainer>
       <Tittle>{locationInfo.name}</Tittle>
       <ActivitiesContainer>
-        {activities.map((activity) => <ActivityCard activityInfo={activity} />)}
+        {activities.map((activity) => <ActivityCard activityInfo={activity} selectedActivities={selectedActivities} />)}
       </ActivitiesContainer>
     </PlacesContainer>
   );
@@ -46,6 +49,4 @@ const ActivitiesContainer = styled.div`
     background: #888;
     border-radius: 6px;
   }
-  /* display: flex;
-  flex-direction: column; */
 `;
