@@ -8,7 +8,6 @@ export function ActivityProvider({ children }) {
   const [selectedActivities, setSelectedActivities] = useState([]);
 
   useEffect(() => {
-    setSelectedActivities([1, 8, 4]);
     setActivities(
       [
         {

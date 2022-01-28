@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 import ActivityContext from "../../contexts/ActivityContext";
 import ActivityButton from "./ActivityButton";
 
@@ -11,7 +12,7 @@ export default function ActivityCard({ activityInfo }) {
     end,
     totalOfSeats,
   } = activityInfo;
-  const { selectedActivities } = useContext(ActivityContext);
+  const { selectedActivities, setSelectedActivities } = useContext(ActivityContext);
 
   function getCardHeight(start, end) {
     const duration = (end - start) / 60000;
@@ -24,11 +25,24 @@ export default function ActivityCard({ activityInfo }) {
     return time.toTimeString().slice(0, 5);
   }
 
+  function selectActivity() {
+    if(isSelected) return toast("Você já está inscrito nessa atividade!");
+    if(!totalOfSeats) return toast("Não há vagas disponíveis para essa atividade!");
+
+    setSelectedActivities([...selectedActivities, id]);
+    toast("Inscrição realizada com sucesso!");
+  }
+
   const cardHeight = getCardHeight(start, end);
   const isSelected = selectedActivities.includes(id);
 
   return (
-    <StyledCard height={cardHeight} isSelected={isSelected} ifFull={!totalOfSeats} >
+    <StyledCard
+      height={cardHeight}
+      isSelected={isSelected}
+      ifFull={!totalOfSeats}
+      onClick={selectActivity}
+    >
       <Info>
         <Name>{name}</Name>
         <Time>{formatTime(start)} - {formatTime(end)}</Time>
