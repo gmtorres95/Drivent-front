@@ -16,13 +16,13 @@ export default function WarningMessage({ children }) {
 
 const StyledWarning = styled(Typography)`
   font-family: 'Roboto',sans-serif;
+  font-weight: normal !important;
   color: #8E8E8E;
   font-size: 20px;
   width: 480px;
 `;
 
 const ContainerWarning = styled.div`
-  width: 390px;
   text-align: center;
   position: absolute;
   top:50%;

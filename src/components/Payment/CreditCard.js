@@ -155,12 +155,8 @@ const ContainerInputs = styled.div`
     flex-direction: column;
     width: 300px;
     margin-left: 30px;
-    /* input:nth-child(2) {
-      margin: 10px 0px;
-    } */
     input {
-        height: 10px;
-
+      height: 10px;
     }
 `;
 

@@ -41,16 +41,3 @@ const StyledTypography = styled(Typography)`
   margin-bottom: 20px!important;
 `;
 
-const StyledWarning = styled(Typography)`
-  font-family: 'Roboto',sans-serif;
-  color: #8E8E8E;
-  font-size: 20px;
-`;
-const ContainerWarning = styled.div`
-  width: 390px;
-  text-align: center;
-  position: absolute;
-  top:50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
