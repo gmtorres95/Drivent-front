@@ -27,10 +27,13 @@ export default function ScheduleByDay() {
 
   return(
     <>
-      <StyledSubTitle variant="h6">
+      <StyledSubTitle
+        variant="h6"
+        selected={selectedDay}
+      >
           Primeiro, filtre pelo dia do evento:
       </StyledSubTitle>
-      <Box>
+      <Box selected={selectedDay}>
         {dates.map(({ date, id }) => (
           <Date
             date={date}
@@ -47,10 +50,11 @@ export default function ScheduleByDay() {
 const StyledSubTitle = styled(Typography)`
   color: #8E8E8E;
   font-weight: normal !important;
+  display: ${({ selected }) => selected ? "none" : "inherit"};
 `;
 
 const Box = styled.div`
     display: flex;
-    margin-top: 20px;
+    margin-top: ${({ selected }) => selected ? "27px" : "20px"};
 `;
  
