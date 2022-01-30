@@ -4,14 +4,17 @@ import "dayjs/locale/pt-br";
 
 export default function Date({ date, id, selectedDay, setSelectedDay }) {
   const isSelected = selectedDay === id;
-  const weekday = dayjs(date).locale("pt-br").format("dddd, DD/MM").split(",")[0].split("-")[0];
-  const day = dayjs(date).locale("pt-br").format("dddd, DD/MM").split(",").splice(1).join("");
-
+  const weekday = dayjs(date).locale("pt-br").format("dddd").split("-")[0];
+  const day = dayjs(date).locale("pt-br").format("DD/MM");
+  
   return(
     <ActivityDate
       isSelected={isSelected}
-      onClick={() => setSelectedDay(id)} >
-      {`${weekday}, ${day}`}
+      onClick={() => setSelectedDay(id)}
+    >
+      <span>
+        {`${weekday}, ${day}`}
+      </span>
     </ActivityDate>
   );
 }
@@ -25,9 +28,11 @@ const ActivityDate = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: normal !important;
-    font-size: 14px;
     margin-right: 17px;
+    span {
+        font-weight: normal !important;
+        font-size: 14px;
+    }
     &:hover {
         cursor: pointer;
     }
