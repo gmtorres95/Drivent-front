@@ -8,7 +8,7 @@ export default function Location({ locationInfo }) {
     <PlacesContainer>
       <Tittle>{locationInfo.name}</Tittle>
       <ActivitiesContainer>
-        {activities.map((activity) => <ActivityCard activityInfo={activity} />)}
+        {activities.map((activity) => <ActivityCard activityInfo={activity} key={activity.id} />)}
       </ActivitiesContainer>
     </PlacesContainer>
   );

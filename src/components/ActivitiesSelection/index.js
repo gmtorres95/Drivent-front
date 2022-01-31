@@ -1,15 +1,38 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import ActivityContext from "../../contexts/ActivityContext";
-import ActivitiesTable from "./ActivitiesTable";
 import Loading from "../Loading";
+import Location from "./Location";
+import useApi from "../../hooks/useApi";
+import TicketContext from "../../contexts/TicketContext";
 
-export default function ActivitiesSelection() {
-  const { activities } = useContext(ActivityContext);
+export default function ActivitiesSelection({ selectedDay }) {
+  const [locations, setLocations] = useState(null);
+  const { activity } = useApi();
+  const { attTicket } = useContext(TicketContext);
+
+  useEffect(() => {
+    attTicket();
+    activity.getActivitiesByDate(selectedDay).then((response) => {
+      setLocations(response.data);
+    });
+  }, [selectedDay]);
+
+  if(!locations) return <Loading />;
 
   return (
     <Container>
-      {activities ? <ActivitiesTable /> : <Loading />}
+      <EventsContainer>
+        {
+          locations.map((locationInfo, key) => {
+            return (
+              <Location
+                key={key}
+                locationInfo={locationInfo}
+              />
+            );
+          })
+        }
+      </EventsContainer>
     </Container>
   );
 }
@@ -20,4 +43,11 @@ const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
+`;
+
+const EventsContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
 `;

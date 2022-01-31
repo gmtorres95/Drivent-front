@@ -1,9 +1,10 @@
-import { useContext } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
-import ActivityContext from "../../contexts/ActivityContext";
 import ActivityButton from "./ActivityButton";
 import useApi from "../../hooks/useApi";
+import { useContext, useState } from "react";
+import TicketContext from "../../contexts/TicketContext";
+import dayjs from "dayjs";
 
 export default function ActivityCard({ activityInfo }) {
   const {
@@ -14,17 +15,18 @@ export default function ActivityCard({ activityInfo }) {
     totalOfSeats,
   } = activityInfo;
   const { activity } = useApi();
-  const { selectedActivities, setSelectedActivities } = useContext(ActivityContext);
+  const { attTicket, ticketData } = useContext(TicketContext);
+  const [isSelected, setIsSelected] = useState(() => ticketData.activities.map((activity) => activity.id).includes(id));
 
   function getCardHeight(start, end) {
-    const duration = (end - start) / 60000;
+    const duration = (new Date(end) - new Date(start)) / 60000;
     const baseHeight = 4 / 3;
     const padding = Math.ceil((duration / 60) - 1) * 12;
     return duration * baseHeight + padding;
   }
 
   function formatTime(time) {
-    return time.toTimeString().slice(0, 5);
+    return dayjs(time).format("HH:mm");
   }
 
   function selectActivity() {
@@ -32,16 +34,17 @@ export default function ActivityCard({ activityInfo }) {
     if(!totalOfSeats) return toast("Não há vagas disponíveis para essa atividade!");
     activity.postSubscription(id).then(() => {
       toast("Inscrição realizada com sucesso!");
-      setSelectedActivities([...selectedActivities, id]);
+      setIsSelected(true);
+      attTicket();
     }).catch((err) => {
       if(err.response.status === 409) {
         return toast("Não é possivel se inscrever em atividades de mesmo horário");
       }
+      return toast("Erro no servidor! Tente novamente mais tarde.");
     });
   }
 
   const cardHeight = getCardHeight(start, end);
-  const isSelected = selectedActivities.includes(id);
 
   return (
     <StyledCard

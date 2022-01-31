@@ -16,7 +16,6 @@ import Dashboard from "./pages/Dashboard";
 import EventInfoContext, { EventInfoProvider } from "./contexts/EventInfoContext";
 import UserContext, { UserProvider } from "./contexts/UserContext";
 import { TicketProvider } from "./contexts/TicketContext";
-import { ActivityProvider } from "./contexts/ActivityContext";
 
 export default function App() {
   return (
@@ -25,27 +24,25 @@ export default function App() {
       <EventInfoProvider>
         <UserProvider>
           <TicketProvider>
-            <ActivityProvider>
-              <Router>
-                <Switch>
-                  <ConditionalRoute check={ensureCountdownOngoing} path="/" exact>
-                    <Countdown />
-                  </ConditionalRoute>
+            <Router>
+              <Switch>
+                <ConditionalRoute check={ensureCountdownOngoing} path="/" exact>
+                  <Countdown />
+                </ConditionalRoute>
 
-                  <ConditionalRoute check={ensureCountdownOver} path="/enroll" exact>
-                    <Enroll />
-                  </ConditionalRoute>
+                <ConditionalRoute check={ensureCountdownOver} path="/enroll" exact>
+                  <Enroll />
+                </ConditionalRoute>
 
-                  <ConditionalRoute check={ensureCountdownOver} path="/sign-in" exact>
-                    <SignIn />
-                  </ConditionalRoute>
+                <ConditionalRoute check={ensureCountdownOver} path="/sign-in" exact>
+                  <SignIn />
+                </ConditionalRoute>
 
-                  <ConditionalRoute check={ensureAuthenticated} path="/dashboard">
-                    <Dashboard />
-                  </ConditionalRoute>
-                </Switch>
-              </Router>
-            </ActivityProvider>
+                <ConditionalRoute check={ensureAuthenticated} path="/dashboard">
+                  <Dashboard />
+                </ConditionalRoute>
+              </Switch>
+            </Router>
           </TicketProvider>
         </UserProvider>
       </EventInfoProvider>
@@ -80,11 +77,3 @@ function ensureAuthenticated() {
     { to: "/sign-in", check: () => !!userData.token, message: "Por favor, faça login!" }
   ];
 }
-
-// function ensureEventIsFinished() {
-//   const { eventInfo } = useContext(EventInfoContext);
-
-//   return [
-//     { to: "/", check: () => dayjs().isAfter(dayjs(eventInfo.endDate)), message: "Os certificados não foram liberados ainda!" }
-//   ];
-// }

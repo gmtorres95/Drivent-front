@@ -5,6 +5,7 @@ import useApi from "../../hooks/useApi";
 import Loading from "../Loading";
 import { toast } from "react-toastify";
 import { Typography } from "@material-ui/core";
+import ActivitiesSelection from "../ActivitiesSelection";
 
 export default function ScheduleByDay() {  
   const [selectedDay, setSelectedDay] = useState(false);
@@ -43,6 +44,7 @@ export default function ScheduleByDay() {
             setSelectedDay={setSelectedDay} />
         ))}
       </Box>
+      {selectedDay && <ActivitiesSelection selectedDay={selectedDay} />}
     </>
   );
 }
