@@ -50,13 +50,27 @@ export default function SignIn() {
       <Row>
         <Label>Entrar</Label>
         <form onSubmit={submit}>
-          <Input label="E-mail" type="text" fullWidth value={email} onChange={e => setEmail(e.target.value)} />
-          <Input label="Senha" type="password" fullWidth value={password} onChange={e => setPassword(e.target.value)} />
+          <Input 
+            label="E-mail" 
+            type="text" 
+            fullWidth 
+            value={email} 
+            onChange={e => setEmail(e.target.value)} 
+            disabled={loadingSignIn}
+          />
+          <Input 
+            label="Senha" 
+            type="password" 
+            fullWidth 
+            value={password} 
+            onChange={e => setPassword(e.target.value)} 
+            disabled={loadingSignIn}
+          />
           <Button type="submit" color="primary" fullWidth disabled={loadingSignIn}>Entrar</Button>
         </form>
       </Row>
       <Row>
-        <Link to="/enroll">Não possui login? Inscreva-se</Link>
+        <Link to={loadingSignIn || "/enroll"}>Não possui login? Inscreva-se</Link>
       </Row>
     </AuthLayout>
   );
