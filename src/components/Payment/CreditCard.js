@@ -19,6 +19,8 @@ export default function CreditCardPayment({ isPaid, setIsPaid }) {
   const [isFocus, setIsFocus] = useState("");
   const { attTicket } = useContext(TicketContext);
   const { ticket } = useApi();
+  const [cardNumberMask, setCardNumberMask] = useState("");
+  const [cvcMask, setCvcMask] = useState("");
 
   function makePayment(event) {
     event.preventDefault();
@@ -28,7 +30,7 @@ export default function CreditCardPayment({ isPaid, setIsPaid }) {
       validThru,
       cvc,
     };
-
+    
     if(!validation(body)) {
       return toast("Preencha os dados corretamente!");
     }
@@ -41,6 +43,35 @@ export default function CreditCardPayment({ isPaid, setIsPaid }) {
       toast("Não foi possível carregar os detalhes do ingresso");
     });
   }
+
+  function onChange(event) {
+    setCardNumber(event.target.value);
+    let cardType = cardNumber.substring(0, 2);
+
+    function adaptCardNumberMask(cardType) {
+      const cases =  {
+        30: "9999 999999 9999",
+        34: "9999 999999 99999",
+        36: "9999 999999 9999",
+        38: "9999 999999 9999",
+        37: "9999 999999 99999",
+        default: "9999 9999 9999 9999",
+      };
+      return setCardNumberMask(cases[cardType] || cases.default);
+    }
+    adaptCardNumberMask(cardType);
+
+    function adaptCvcMask(cardType) {
+      const cases =  {
+        34: "9999",
+        37: "9999",
+        default: "999",
+      };
+      return setCvcMask(cases[cardType] || cases.default);
+    }
+    adaptCvcMask(cardType);
+  }
+
   return (
     <>
       {!isPaid ?
@@ -57,13 +88,13 @@ export default function CreditCardPayment({ isPaid, setIsPaid }) {
               <CreditCardInfoInput
                 marginButtom={20}
                 name="cardNumber"
-                mask="9999 9999 9999 9999"
+                mask={cardNumberMask}
                 placeholder="Card Number"
                 type="number"
                 fullWidth
                 value={cardNumber}
                 onFocus={(e) => setIsFocus(e.target.name)}
-                onChange={e => setCardNumber(e.target.value)}
+                onChange={onChange}
               />
               <p> Eg: 49...,51...,36...,37...</p>
               <CreditCardInfoInput
@@ -88,13 +119,13 @@ export default function CreditCardPayment({ isPaid, setIsPaid }) {
                 />
                 <CreditCardInfoInput
                   name="cvc"
-                  mask="999"
+                  mask={cvcMask}
                   placeholder="CVC"
                   type="number"
                   fullWidth
                   value={cvc}
                   onFocus={(e) => setIsFocus(e.target.name)}
-                  onChange={e => setCvc(e.target.value)}
+                  onChange={(e) => setCvc(e.target.value)}
                 />
               </BoxInputs>
             </ContainerInputs>
@@ -155,12 +186,8 @@ const ContainerInputs = styled.div`
     flex-direction: column;
     width: 300px;
     margin-left: 30px;
-    /* input:nth-child(2) {
-      margin: 10px 0px;
-    } */
     input {
-        height: 10px;
-
+      height: 10px;
     }
 `;
 

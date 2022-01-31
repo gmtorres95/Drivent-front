@@ -5,7 +5,7 @@ import CepApi from "../services/CepApi";
 import EnrollmentApi from "../services/EnrollmentApi";
 import HotelApi from "../services/HotelApi";
 import TicketApi from "../services/TicketApi";
-import ActivitiesApi from "../services/ActivitiesApi";
+import ActivityApi from "../services/ActivityApi";
 
 export default function useApi() {
   return {
@@ -16,6 +16,6 @@ export default function useApi() {
     enrollment: new EnrollmentApi(),
     ticket: new TicketApi(),
     hotel: new HotelApi(),
-    activity: new ActivitiesApi(),
+    activity: new ActivityApi(),
   };
 }

@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import HotalSelection from "../../../components/HotelSelection";
 import HotelSumary from "../../../components/HotelSumary";
+import WarningMessage from "../../../components/WarningMessage";
 import TicketContext from "../../../contexts/TicketContext";
 
 export default function Hotel() {
@@ -19,23 +20,13 @@ export default function Hotel() {
             :
             <HotalSelection setIsChangingRoom={setIsChangingRoom} />
           :
-          <ContainerWarning>
-            <StyledWarning 
-              variant="h6" 
-              align="center"
-            >
+          <WarningMessage>
             Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades
-            </StyledWarning>
-          </ContainerWarning>
+          </WarningMessage>
         :
-        <ContainerWarning>
-          <StyledWarning 
-            variant="h6" 
-            align="center"
-          >
+        <WarningMessage>
             Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem
-          </StyledWarning>
-        </ContainerWarning>
+        </WarningMessage>
       }
     </>
   );
@@ -43,18 +34,4 @@ export default function Hotel() {
 
 const StyledTypography = styled(Typography)`
   margin-bottom: 20px!important;
-`;
-
-const StyledWarning = styled(Typography)`
-  font-family: 'Roboto',sans-serif;
-  color: #8E8E8E;
-  font-size: 20px;
-`;
-const ContainerWarning = styled.div`
-  width: 390px;
-  text-align: center;
-  position: absolute;
-  top:50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 `;
