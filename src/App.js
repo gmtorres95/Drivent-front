@@ -77,11 +77,3 @@ function ensureAuthenticated() {
     { to: "/sign-in", check: () => !!userData.token, message: "Por favor, faça login!" }
   ];
 }
-
-// function ensureEventIsFinished() {
-//   const { eventInfo } = useContext(EventInfoContext);
-
-//   return [
-//     { to: "/", check: () => dayjs().isAfter(dayjs(eventInfo.endDate)), message: "Os certificados não foram liberados ainda!" }
-//   ];
-// }
