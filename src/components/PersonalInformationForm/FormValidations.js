@@ -1,3 +1,5 @@
+import { cpf } from "cpf-cnpj-validator";
+
 const validations = {
   name: {
     custom: {
@@ -8,7 +10,7 @@ const validations = {
 
   cpf: {
     custom: {
-      isValid: (value) => parseInt(value?.length, 10) === 14,
+      isValid: (value) => cpf.isValid(value),
       message: "Digite um CPF válido",
     },
   },
