@@ -31,18 +31,16 @@ export default function Enroll() {
 
     if (password !== confirmPassword) {
       toast("As senhas devem ser iguais!");
+      setLoadingEnroll(false);
     } else {
       api.user.signUp(email, password).then(response => {
         toast("Inscrito com sucesso! Por favor, faça login.");
         history.push("/sign-in");
       }).catch(error => {
-        if (error.response) {
-          for (const detail of error.response.data.details) {
-            toast(detail);
-          }
-        } else {
-          toast("Não foi possível conectar ao servidor!");
-        }
+        if(error.response.status !== 500)
+          toast(error.response.data.message);
+        else toast("Não foi possível conectar ao servidor!");
+        setLoadingEnroll(false);
       }).then(() => {
         setLoadingEnroll(false);
       });
@@ -58,14 +56,29 @@ export default function Enroll() {
       <Row>
         <Label>Inscrição</Label>
         <form onSubmit={submit}>
-          <Input label="E-mail" type="text" fullWidth value={email} onChange={e => setEmail(e.target.value)} />
-          <Input label="Senha" type="password" fullWidth value={password} onChange={e => setPassword(e.target.value)} />
-          <Input label="Repita sua senha" type="password" fullWidth value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
+          <Input 
+            label="E-mail" 
+            type="text" fullWidth 
+            value={email} onChange={e => setEmail(e.target.value)} 
+            disabled={loadingEnroll}
+          />
+          <Input 
+            label="Senha" 
+            type="password" fullWidth 
+            value={password} onChange={e => setPassword(e.target.value)} 
+            disabled={loadingEnroll}
+          />
+          <Input 
+            label="Repita sua senha" 
+            type="password" fullWidth 
+            value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} 
+            disabled={loadingEnroll}
+          />
           <Button type="submit" color="primary" fullWidth disabled={loadingEnroll}>Inscrever</Button>
         </form>
       </Row>
       <Row>
-        <Link to="/sign-in">Já está inscrito? Faça login</Link>
+        <Link to={loadingEnroll || "/sign-in"}>Já está inscrito? Faça login</Link>
       </Row>
     </AuthLayout>
   );
