@@ -6,11 +6,12 @@ import useApi from "../../hooks/useApi";
 import ChooseRoom from "../ChooseRoom";
 import HotelCard from "./HotelCard";
 import TicketContext from "../../contexts/TicketContext";
+import Loading from "../Loading";
 
 export default function HotalSelection({ setIsChangingRoom }) {
   const { ticketData } = useContext(TicketContext);
   const [selectedHotel, setSelectedHotel] = useState(ticketData.room?.hotel.id || null);
-  const [hotels, setHotels] = useState([]);
+  const [hotels, setHotels] = useState(null);
   const { hotel } = useApi();
 
   useEffect(() => {
@@ -21,10 +22,8 @@ export default function HotalSelection({ setIsChangingRoom }) {
     hotel.getHotelsList()
       .then((res) => setHotels(res.data))
       .catch((error) => {
-        if (error.response?.data?.details) {
-          for (const detail of error.response.data.details) {
-            toast(detail);
-          }
+        if (error.response?.data?.message) {
+          toast(error.response.data.message);
         } else {
           toast("Não foi possível");
         }
@@ -33,6 +32,8 @@ export default function HotalSelection({ setIsChangingRoom }) {
       });
   }
   
+  if(!hotels) return <Loading />;
+
   return(
     <>
       <Subtitle variant="h6">Primeiro, escolha seu hotel</Subtitle>

@@ -9,7 +9,7 @@ import ActivitiesSelection from "../ActivitiesSelection";
 
 export default function ScheduleByDay() {  
   const [selectedDay, setSelectedDay] = useState(false);
-  const [dates, setDates] = useState([]);
+  const [dates, setDates] = useState(null);
   const api = useApi();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function ScheduleByDay() {
         variant="h6"
         selected={selectedDay}
       >
-          Primeiro, filtre pelo dia do evento:
+        Primeiro, filtre pelo dia do evento:
       </StyledSubTitle>
       <Box selected={selectedDay}>
         {dates.map(({ date, id }) => (
