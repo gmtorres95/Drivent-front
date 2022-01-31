@@ -7,15 +7,17 @@ import Button from "../Form/Button";
 import useApi from "../../hooks/useApi";
 import { Typography } from "@material-ui/core";
 import TicketContext from "../../contexts/TicketContext";
+import Loading from "../Loading";
 
 export default function ChooseRoom({ selectedHotel, setIsChangingRoom }) {
   const { ticketData, attTicket } = useContext(TicketContext);
-  const [rooms, setRooms] = useState([]);
+  const [rooms, setRooms] = useState(null);
   const [selectedRoom, setSelectedRoom] = useState(ticketData.room?.id || null);
   const { hotel, ticket } = useApi();
 
   useEffect(() => {
     getRooms();
+    setRooms(null);
   }, [selectedHotel]);
 
   function getRooms() {
@@ -53,6 +55,8 @@ export default function ChooseRoom({ selectedHotel, setIsChangingRoom }) {
         console.log(error);
       });
   }
+
+  if(!rooms) return <Loading />;
 
   return(
     <>

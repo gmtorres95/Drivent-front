@@ -20,11 +20,13 @@ import { InputWrapper } from "./InputWrapper";
 import { ErrorMsg } from "./ErrorMsg";
 import { ufList } from "./ufList";
 import FormValidations from "./FormValidations";
+import Loading from "../Loading";
 
 dayjs.extend(CustomParseFormat);
 
 export default function PersonalInformationForm() {
   const [dynamicInputIsLoading, setDynamicInputIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { enrollment, cep } = useApi();
 
   const {
@@ -85,27 +87,30 @@ export default function PersonalInformationForm() {
   });
 
   useEffect(() => {
-    enrollment.getPersonalInformations().then(response => {
-      if (response.status !== 200) {
-        return;
-      }
-      
-      const { name, cpf, birthday, phone, address } = response.data;
+    setIsLoading(true);
+    enrollment.getPersonalInformations()
+      .then(response => {
+        if (response.status !== 200) {
+          return;
+        }
+        
+        const { name, cpf, birthday, phone, address } = response.data;
 
-      setData({
-        name,
-        cpf,
-        birthday,
-        phone,
-        cep: address.cep,
-        street: address.street,
-        city: address.city,
-        state: address.state,
-        number: address.number,
-        neighborhood: address.neighborhood,
-        addressDetail: address.addressDetail,
-      });
-    });
+        setData({
+          name,
+          cpf,
+          birthday,
+          phone,
+          cep: address.cep,
+          street: address.street,
+          city: address.city,
+          state: address.state,
+          number: address.number,
+          neighborhood: address.neighborhood,
+          addressDetail: address.addressDetail,
+        });
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   function isValidCep(cep) {
@@ -136,6 +141,8 @@ export default function PersonalInformationForm() {
       });
     }
   };
+
+  if(isLoading) return <Loading />;
 
   return (
     <>

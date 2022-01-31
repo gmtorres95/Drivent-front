@@ -7,19 +7,24 @@ import Ticket from "../../../components/Ticket";
 import { useContext } from "react";
 import TicketContext from "../../../contexts/TicketContext";
 import WarningMessage from "../../../components/WarningMessage";
+import Loading from "../../../components/Loading";
 
 export default function Payment() {
   const { enrollment } = useApi();
-  const [isValidForAccess, setIsValidForAccess] = useState(false);
+  const [isValidForAccess, setIsValidForAccess] = useState(null);
   const { ticketData } = useContext(TicketContext);
 
   useEffect(() => {
-    enrollment.getPersonalInformations().then((response) => {
-      if(response.status === 200) {
-        setIsValidForAccess(true);
-      }
-    });
+    enrollment.getPersonalInformations()
+      .then((response) => {
+        if(response.status === 200) {
+          setIsValidForAccess(true);
+        }else setIsValidForAccess(false);
+      })
+      .catch((err) => setIsValidForAccess(false));
   }, []);
+
+  if(isValidForAccess === null) return <Loading />;
 
   return (
     <>
@@ -31,7 +36,7 @@ export default function Payment() {
           <TicketInfoSummary />
         : 
         <WarningMessage>
-            Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso
+          Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso
         </WarningMessage>
       }
     </> );

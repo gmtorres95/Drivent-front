@@ -15,6 +15,7 @@ export default function ActivitiesSelection({ selectedDay }) {
     activity.getActivitiesByDate(selectedDay).then((response) => {
       setLocations(response.data);
     });
+    setLocations(null);
   }, [selectedDay]);
 
   if(!locations) return <Loading />;

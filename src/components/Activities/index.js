@@ -10,8 +10,8 @@ export default function ChooseActivities() {
     <>
       {ticketData?.type.type === "Online" ?
         <WarningMessage>
-            Sua modalidade de ingresso não necessita escolher
-            atividade. Você terá acesso a todas as atividades.
+          Sua modalidade de ingresso não necessita escolher
+          atividade. Você terá acesso a todas as atividades.
         </WarningMessage> :
         <ScheduleByDay />
       }
