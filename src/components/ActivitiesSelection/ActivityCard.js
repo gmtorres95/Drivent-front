@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { toast } from "react-toastify";
 import ActivityContext from "../../contexts/ActivityContext";
 import ActivityButton from "./ActivityButton";
+import useApi from "../../hooks/useApi";
 
 export default function ActivityCard({ activityInfo }) {
   const {
@@ -12,6 +13,7 @@ export default function ActivityCard({ activityInfo }) {
     end,
     totalOfSeats,
   } = activityInfo;
+  const { activity } = useApi();
   const { selectedActivities, setSelectedActivities } = useContext(ActivityContext);
 
   function getCardHeight(start, end) {
@@ -28,9 +30,14 @@ export default function ActivityCard({ activityInfo }) {
   function selectActivity() {
     if(isSelected) return toast("Você já está inscrito nessa atividade!");
     if(!totalOfSeats) return toast("Não há vagas disponíveis para essa atividade!");
-
-    setSelectedActivities([...selectedActivities, id]);
-    toast("Inscrição realizada com sucesso!");
+    activity.postSubscription(id).then(() => {
+      toast("Inscrição realizada com sucesso!");
+      setSelectedActivities([...selectedActivities, id]);
+    }).catch((err) => {
+      if(err.response.status === 409) {
+        return toast("Não é possivel se inscrever em atividades de mesmo horário");
+      }
+    });
   }
 
   const cardHeight = getCardHeight(start, end);
