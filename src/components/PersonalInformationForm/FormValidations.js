@@ -1,4 +1,5 @@
 import { cpf } from "cpf-cnpj-validator";
+import dayjs from "dayjs";
 
 const validations = {
   name: {
@@ -59,8 +60,13 @@ const validations = {
 
   birthday: {
     custom: {
-      isValid: (value) => !value || !isNaN(new Date(value?.split("-").reverse().join("-"))),
-      message: "Selecione uma data de aniversário",
+      isValid: (value) => {
+        if(!value) return false;
+        if(dayjs(value).isAfter(dayjs(dayjs().subtract(18, "year")))) return false;
+
+        return true;
+      },
+      message: "Data inválida! O usuário deve ter 18 anos ou mais",
     },
   },
 
