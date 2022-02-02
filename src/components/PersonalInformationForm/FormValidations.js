@@ -62,8 +62,12 @@ const validations = {
     custom: {
       isValid: (value) => {
         if(!value) return false;
-        if(dayjs(value).isAfter(dayjs(dayjs().subtract(18, "year")))) return false;
 
+        const userBirthday = dayjs(value, "DD-MM-YYYY");
+        const minimumBirthDate = dayjs().subtract(18, "year");
+
+        if(userBirthday.isAfter(minimumBirthDate)) return false;
+        
         return true;
       },
       message: "Data inválida! O usuário deve ter 18 anos ou mais",
