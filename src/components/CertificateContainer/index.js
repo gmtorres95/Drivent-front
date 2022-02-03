@@ -36,14 +36,16 @@ export default function CertificateContainer() {
   if(!ticketData) return <Loading />;
 
   return (
-    <Container id="pdf">
-      <StyledTitle variant="h3">CERTIFICADO</StyledTitle>
-      <StyledText variant="h5">
+    <Wrapper id="pdf">
+      <Container>
+        <StyledTitle variant="h3">CERTIFICADO</StyledTitle>
+        <StyledText variant="h5">
         Certificamos que o estudante <strong>{name}</strong> participou
         do evento <strong>{event}</strong> de forma {type},
         no período de {start} a {end}, com duração de <strong>{hours}</strong> horas.
-      </StyledText>
-    </Container>
+        </StyledText>
+      </Container>
+    </Wrapper>
   );
 }
 
@@ -62,16 +64,21 @@ const StyledText = styled(Typography)`
 const Container = styled.div`
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
   text-align: center;
-  position: absolute;
-  top:50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   border: double 16px #9E9E9E;
   border-radius: 48px;
-  width: calc(100% - 120px);
-  height: calc(100% - 240px);
   display: flex;
+  height: 80%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  height: calc(100% - 102px);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 5px;
+  box-sizing: border-box;
 `;
