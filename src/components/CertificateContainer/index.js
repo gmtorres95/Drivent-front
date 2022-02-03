@@ -18,10 +18,6 @@ export default function CertificateContainer() {
   const [end, setEnd] = useState("");
 
   useEffect(() => {
-    attTicket();
-  }, []);
-
-  useEffect(() => {
     setEvent(eventInfo.eventTitle);
     setName(ticketData?.enrollment.name);
     setType(ticketData?.type.type.split(" ")[0].toLowerCase());
