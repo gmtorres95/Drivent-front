@@ -5,6 +5,7 @@ import styled from "styled-components";
 import dayjs from "dayjs";
 import TicketContext from "../../contexts/TicketContext";
 import Loading from "../Loading";
+import logo from "../../assets/images/logo.jpeg";
 
 export default function CertificateContainer() {
   const { eventInfo } = useContext(EventInfoContext);
@@ -38,6 +39,7 @@ export default function CertificateContainer() {
   return (
     <Wrapper id="pdf">
       <Container>
+        <img src={logo} alt="Event Logo" />
         <StyledTitle variant="h3">CERTIFICADO</StyledTitle>
         <StyledText variant="h5">
         Certificamos que o estudante <strong>{name}</strong> participou
@@ -51,26 +53,29 @@ export default function CertificateContainer() {
 
 const StyledTitle = styled(Typography)`
   font-weight: 500 !important;
-  color: #6E6E6E;
 `;
 
 const StyledText = styled(Typography)`
   margin: 24px 0px !important;
   font-weight: 400 !important;
-  color: #444;
   width: 700px !important;
 `;
 
 const Container = styled.div`
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
   text-align: center;
-  border: double 16px #9E9E9E;
-  border-radius: 48px;
+  border: double 16px #FFFFFF;
+  background: linear-gradient(89.8deg, #FF4791 -80.00%, #FFD77F 80.00%);
   display: flex;
   height: 80%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  img {
+    width: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
 `;
 
 const Wrapper = styled.div`
