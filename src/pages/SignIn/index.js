@@ -18,27 +18,31 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [loadingSignIn, setLoadingSignIn] = useState(false);
 
-  const api = useApi();
+  const { auth } = useApi();
 
   const { eventInfo } = useContext(EventInfoContext);
   const { setUserData } = useContext(UserContext);
   
   function submit(event) {
     event.preventDefault();
+    if (!email || !password) {
+      return toast("Preencha os campos corretamente!");
+    }
     setLoadingSignIn(true);
-
-    api.auth.signIn(email, password).then(response => {
-      setUserData(response.data);
-    }).catch(error => {
-      if (error.response.status === 401) {
-        toast("Email e/ou Senha incorreto(s)!");
-      } else {
+    auth.signIn(email, password)
+      .then(response => {
+        setLoadingSignIn(false);
+        setUserData(response.data);
+      }).catch(error => {
+        setLoadingSignIn(false);
+        if (error.response.status === 401) {
+          return toast("Email e/ou Senha incorreto(s)!");
+        }
+        if (error.response.status === 422) {
+          return toast("Email e/ou Senha incorreto(s)!");
+        }
         toast("Não foi possível conectar ao servidor!");
-      }
-      setLoadingSignIn(false);
-    }).then(() => {
-      setLoadingSignIn(false);
-    });
+      });
   } 
 
   return (

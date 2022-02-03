@@ -21,30 +21,32 @@ export default function Enroll() {
 
   const history = useHistory();
 
-  const api = useApi();
+  const { user } = useApi();
   
   const { eventInfo } = useContext(EventInfoContext);
 
   function submit(event) {
     event.preventDefault();
-    setLoadingEnroll(true);
 
+    if (!email || !password) {
+      return toast("Preencha os campos corretamente");
+    }
     if (password !== confirmPassword) {
-      toast("As senhas devem ser iguais!");
-      setLoadingEnroll(false);
-    } else {
-      api.user.signUp(email, password).then(response => {
+      return toast("As senhas devem ser iguais!");
+    } 
+    setLoadingEnroll(true);
+    user.signUp(email, password)
+      .then(response => {
+        setLoadingEnroll(false);
         toast("Inscrito com sucesso! Por favor, faça login.");
         history.push("/sign-in");
       }).catch(error => {
-        if(error.response.status !== 500)
-          toast(error.response.data.message);
-        else toast("Não foi possível conectar ao servidor!");
         setLoadingEnroll(false);
-      }).then(() => {
-        setLoadingEnroll(false);
+        if(error?.response?.status !== 500) {
+          return toast(error.response.data.message);
+        }
+        toast("Não foi possível conectar ao servidor!");
       });
-    }
   }
 
   return (
