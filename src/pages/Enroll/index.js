@@ -42,7 +42,7 @@ export default function Enroll() {
         history.push("/sign-in");
       }).catch(error => {
         setLoadingEnroll(false);
-        if(error.response.status !== 500) {
+        if(error?.response?.status !== 500) {
           return toast(error.response.data.message);
         }
         toast("Não foi possível conectar ao servidor!");
