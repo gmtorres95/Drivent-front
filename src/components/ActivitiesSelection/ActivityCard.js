@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { toast } from "react-toastify";
+import dayjs from "dayjs";
 import ActivityButton from "./ActivityButton";
 import useApi from "../../hooks/useApi";
 import { useContext, useState } from "react";
 import TicketContext from "../../contexts/TicketContext";
-import dayjs from "dayjs";
 
 export default function ActivityCard({ activityInfo }) {
   const {
@@ -30,7 +30,7 @@ export default function ActivityCard({ activityInfo }) {
   }
 
   function selectActivity() {
-    if(isSelected) return toast("Você já está inscrito nessa atividade!");
+    if(isSelected) return unsubscribe();
     if(!totalOfSeats) return toast("Não há vagas disponíveis para essa atividade!");
     activity.postSubscription(id).then(() => {
       toast("Inscrição realizada com sucesso!");
@@ -45,6 +45,14 @@ export default function ActivityCard({ activityInfo }) {
   }
 
   const cardHeight = getCardHeight(start, end);
+
+  function unsubscribe() {
+    activity.updateSubscription(id).then(() => {
+      setIsSelected(false);
+    }).catch(() => {
+      return toast("Não foi possível cancelar a inscrição!");
+    });
+  }
 
   return (
     <StyledCard
