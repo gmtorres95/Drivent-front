@@ -62,7 +62,7 @@ const StyledTypography = styled(Typography)`
 `;
 
 const StyledButton = styled(Button)`
-  font-decoration: none !important;
+  text-decoration: none !important;
   position: absolute !important;
   left: calc(50% - 75px);
   width: 150px;
