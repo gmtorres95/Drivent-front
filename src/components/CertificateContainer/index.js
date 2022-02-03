@@ -9,7 +9,7 @@ import logo from "../../assets/images/logo.jpeg";
 
 export default function CertificateContainer() {
   const { eventInfo } = useContext(EventInfoContext);
-  const { ticketData, attTicket } = useContext(TicketContext);
+  const { ticketData } = useContext(TicketContext);
   const [event, setEvent] = useState("");
   const [name, setName] = useState("");
   const [type, setType] = useState("");
