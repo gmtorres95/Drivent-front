@@ -25,4 +25,12 @@ export default class ActivityApi extends AuthenticatedApi {
       }
     });
   }
+
+  updateSubscription(activityId) {
+    return api.put(`activities/${activityId}`, {}, {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
+  }
 }
