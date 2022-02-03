@@ -5,6 +5,10 @@ import ActivityButton from "./ActivityButton";
 import useApi from "../../hooks/useApi";
 import { useContext, useState } from "react";
 import TicketContext from "../../contexts/TicketContext";
+import { Dialog } from "@mui/material";
+import { DialogTitle } from "@mui/material";
+import { DialogActions }  from "@mui/material";
+import { Button } from "@mui/material";
 
 export default function ActivityCard({ activityInfo }) {
   const {
@@ -17,6 +21,7 @@ export default function ActivityCard({ activityInfo }) {
   const { activity } = useApi();
   const { attTicket, ticketData } = useContext(TicketContext);
   const [isSelected, setIsSelected] = useState(() => ticketData.activities.map((activity) => activity.id).includes(id));
+  const [openModal, setOpenModal] = useState(false);
 
   function getCardHeight(start, end) {
     const duration = (new Date(end) - new Date(start)) / 60000;
@@ -30,7 +35,7 @@ export default function ActivityCard({ activityInfo }) {
   }
 
   function selectActivity() {
-    if(isSelected) return unsubscribe();
+    if(isSelected) return setOpenModal(true);
     if(!totalOfSeats) return toast("Não há vagas disponíveis para essa atividade!");
     activity.postSubscription(id).then(() => {
       toast("Inscrição realizada com sucesso!");
@@ -49,24 +54,53 @@ export default function ActivityCard({ activityInfo }) {
   function unsubscribe() {
     activity.updateSubscription(id).then(() => {
       setIsSelected(false);
+      setOpenModal(false);
     }).catch(() => {
       return toast("Não foi possível cancelar a inscrição!");
     });
   }
 
   return (
-    <StyledCard
-      height={cardHeight}
-      isSelected={isSelected}
-      ifFull={!totalOfSeats}
-      onClick={selectActivity}
-    >
-      <Info>
-        <Name>{name}</Name>
-        <Time>{formatTime(start)} - {formatTime(end)}</Time>
-      </Info>
-      <ActivityButton totalOfSeats={totalOfSeats} isSelected={isSelected} />
-    </StyledCard>
+    <>
+      <StyledCard
+        height={cardHeight}
+        isSelected={isSelected}
+        ifFull={!totalOfSeats}
+        onClick={selectActivity}
+      >
+        <Info>
+          <Name>{name}</Name>
+          <Time>{formatTime(start)} - {formatTime(end)}</Time>
+        </Info>
+        <ActivityButton totalOfSeats={totalOfSeats} isSelected={isSelected} />
+      </StyledCard>
+      <Dialog
+        open={openModal}
+        keepMounted
+        onClose={() => setOpenModal(false)}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>
+          {"Você deseja cancelar sua inscrição nesta atividade?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={unsubscribe}
+          >
+            Sim
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={() => setOpenModal(false)}
+          >
+            Não
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 }
 
