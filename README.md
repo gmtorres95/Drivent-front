@@ -1,6 +1,4 @@
-# Driven.t (front-end)
-
-<img src="./public/favicon.png" height="192px" />
+# <img src="./public/favicon.png" height="24px" /> Driven.t (front-end)
 
 Driven.t is a web browser application with which you can manage every single aspect of your event.  
 Check the back-end of this application [here](https://github.com/gmtorres95/Drivent-back)  
@@ -13,6 +11,10 @@ Check the this application in production [here](https://drivent-rho.vercel.app/)
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
   <img src="https://img.shields.io/badge/Vercel-000?style=for-the-badge&logo=vercel&logoColor=white" />
 </div>
+
+## Preview
+
+<img src="./public/preview.gif" height="480px" />
 
 ## How to run
 
