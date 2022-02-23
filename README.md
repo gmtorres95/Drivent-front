@@ -1,6 +1,6 @@
 # <img src="./public/favicon.png" height="24px" /> Driven.t (front-end)
 
-Driven.t is a web browser application with which you can manage every single aspect of your event.  
+Driven.t is a web-app that allows you to manage every single aspect of your event.  
 Check the back-end of this application [here](https://github.com/gmtorres95/Drivent-back)  
 Check the this application in production [here](https://drivent-rho.vercel.app/)  
 
